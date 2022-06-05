@@ -1,0 +1,19 @@
+version: '3.3'
+
+networks:
+  beractive_net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:13
+    container_name: beractive_db
+    environment:
+    - POSTGRES_DB=beractive_dev_db
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=123123
+    - POSTGRES_PORT=5432
+    ports:
+    - "5432:5432"
+    networks:
+      - beractive_net
