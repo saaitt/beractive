@@ -20,7 +20,9 @@ module HappeningsHelper
         end
     end
 
-    class Happening 
+    class HappeningManager
+        mattr_accessor :title
+
         def initialize(title, subtitle, category, happening_at, web_source, url)
             @title = title
             @subtitle = subtitle
@@ -29,6 +31,21 @@ module HappeningsHelper
             @web_source = web_source
             @url = url
         end
+        
+        def save_if_not_exist()
+           existing_happening = Happening.find_by(title: @title, subtitle: @subtitle, category: @category, web_source: @web_source, happening_at: @happening_at) 
+            unless existing_happening.present?
+                Happening.create!(
+                    title: @title,
+                    subtitle: @subtitle,
+                    category: @category,
+                    web_source: @web_source,
+                    happening_at: @happening_at,
+                    link: @url
+                )
+            end 
+        end
+        
     end
 
     class CoberlinEvent
@@ -48,8 +65,8 @@ module HappeningsHelper
                 title = event.children[1].children[1].children[1].children[1].children[3].children[3].text.strip
                 subtitle = event.children[1].children[1].children[1].children[1].children[3].children[5].text.strip
                 category = event.children[1].children[1].children[1].children[1].children[3].children[7].text.strip
-
-                happenings.push(Happening.new(title, subtitle, category, date.to_datetime, 'co-berlin.org', "https://coberlin.org#{link_to_event}"))
+                happening = HappeningManager.new(title, subtitle, category, date.to_datetime, 'co-berlin.org', "https://co-berlin.org#{link_to_event}")
+                happening.save_if_not_exist()
             end
 
             return happenings
@@ -79,7 +96,8 @@ module HappeningsHelper
                         place = event.children[i].text.strip
                         if event.children[i+2].name == 'h4'
                             subtitle = event.children[i+2].text.strip.gsub("\n",'')
-                            happenings.push(Happening.new(title, subtitle, place, date.to_datetime, 'berghain.berlin', "https://www.berghain.berlin#{link_to_event}"))
+                            happening = HappeningManager.new(title, subtitle, place, date.to_datetime, 'berghain.berlin', "https://www.berghain.berlin#{link_to_event}")
+                            happening.save_if_not_exist
                         end
                     end
                 end

@@ -1,2 +1,18 @@
-<h1>Happenings#index</h1>
-<p>Find me in app/views/happenings/index.html.erb</p>
+<h1>Happenings</h1>
+<ul>
+    <% @happenings.each do |happening|%>
+        <li>
+            <a href="<%= happening.link%>">
+                <span><%= happening.title%></span>
+                </br>
+                <span><%= happening.subtitle%></span>
+                </br>
+                <span><%= happening.category%></span>
+                </br>
+                <span><%= happening.happening_at%></span>
+                </br>
+                <span><%= happening.web_source%></span>
+            </a>
+        </li>
+    <% end %>
+</ul>
