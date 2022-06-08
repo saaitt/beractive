@@ -1,24 +1,30 @@
-# README
+# Setting Up
+Use docker-compose to create a db for the project.
+```
+docker-compose up -d
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Install required gems:
+```
+bundle install
+```
 
-Things you may want to cover:
+# Run
+Run the project using the following command:
+```
+rails s
+```
 
-* Ruby version
 
-* System dependencies
+# Usage
+There is a basic page and an api capable of search and filtering
+for the page with all the events use:
+```
+http://{{host}}/happenings
+```
 
-* Configuration
+for the api with search and filtering use the following:
+```
+GET http://{{host}}/api/v1/happenings?title=After&subtitle=Susan&web_source=co-berlin&category=Special
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
