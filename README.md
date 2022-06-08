@@ -25,6 +25,6 @@ http://{{host}}/happenings
 
 for the api with search and filtering use the following:
 ```
-GET http://{{host}}/api/v1/happenings?title=After&subtitle=Susan&web_source=co-berlin&category=Special
+GET http://{{host}}/api/v1/happenings?title=After&subtitle=Susan&web_source=co-berlin&category=Special&happening_from=2020-06-01&happening_until=2020-06-01
 
 ```
